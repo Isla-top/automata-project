@@ -1,3 +1,0 @@
-/home/oslab/automate/automata-project/framework/build/CMakeFiles/turing.dir
-/home/oslab/automate/automata-project/framework/build/CMakeFiles/edit_cache.dir
-/home/oslab/automate/automata-project/framework/build/CMakeFiles/rebuild_cache.dir
