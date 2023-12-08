@@ -110,7 +110,7 @@ void Turing::validate(){
                     this->output += " "s;
                 }
                 this->output += "==================== END ====================\n"s;
-            }else this->output += " illegal input string\n"s;
+            }else this->output += "illegal input string\n"s;
 
             cerr << this->output;
             exit(-4);
