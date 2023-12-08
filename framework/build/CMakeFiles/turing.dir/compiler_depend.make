@@ -197,7 +197,9 @@ CMakeFiles/turing.dir/turing-project/main.cpp.o: ../turing-project/main.cpp \
   /usr/include/c++/11/bits/invoke.h \
   /usr/include/c++/11/bits/enable_special_members.h \
   /usr/include/c++/11/bits/unordered_set.h \
-  /usr/include/c++/11/bits/erase_if.h
+  /usr/include/c++/11/bits/erase_if.h \
+  /usr/include/c++/11/unordered_map \
+  /usr/include/c++/11/bits/unordered_map.h
 
 CMakeFiles/turing.dir/turing-project/parser.cpp.o: ../turing-project/parser.cpp \
   /usr/include/stdc-predef.h \
@@ -396,6 +398,8 @@ CMakeFiles/turing.dir/turing-project/parser.cpp.o: ../turing-project/parser.cpp 
   /usr/include/c++/11/bits/enable_special_members.h \
   /usr/include/c++/11/bits/unordered_set.h \
   /usr/include/c++/11/bits/erase_if.h \
+  /usr/include/c++/11/unordered_map \
+  /usr/include/c++/11/bits/unordered_map.h \
   /usr/include/c++/11/fstream \
   /usr/include/c++/11/bits/codecvt.h \
   /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
@@ -656,12 +660,37 @@ CMakeFiles/turing.dir/turing-project/turing_machine.cpp.o: ../turing-project/tur
   /usr/include/c++/11/bits/invoke.h \
   /usr/include/c++/11/bits/enable_special_members.h \
   /usr/include/c++/11/bits/unordered_set.h \
-  /usr/include/c++/11/bits/erase_if.h
+  /usr/include/c++/11/bits/erase_if.h \
+  /usr/include/c++/11/unordered_map \
+  /usr/include/c++/11/bits/unordered_map.h \
+  /usr/include/c++/11/cmath \
+  /usr/include/math.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+  /usr/include/x86_64-linux-gnu/bits/iscanonical.h
 
+
+/usr/include/x86_64-linux-gnu/bits/iscanonical.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
+
+/usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
+
+/usr/include/x86_64-linux-gnu/bits/math-vector.h:
 
 ../turing-project/turing_machine.cpp:
 
 /usr/include/c++/11/bits/regex_executor.h:
+
+/usr/include/c++/11/bits/regex_compiler.h:
 
 /usr/include/c++/11/bits/regex_scanner.tcc:
 
@@ -672,6 +701,8 @@ CMakeFiles/turing.dir/turing-project/turing_machine.cpp.o: ../turing-project/tur
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
 /usr/include/c++/11/backward/binders.h:
+
+/usr/include/x86_64-linux-gnu/bits/fp-fast.h:
 
 /usr/include/c++/11/iostream:
 
@@ -745,11 +776,15 @@ CMakeFiles/turing.dir/turing-project/turing_machine.cpp.o: ../turing-project/tur
 
 /usr/include/c++/11/cctype:
 
+/usr/include/c++/11/unordered_map:
+
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
 /usr/include/x86_64-linux-gnu/bits/types.h:
 
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
+
+/usr/include/c++/11/bits/unordered_map.h:
 
 /usr/include/c++/11/ext/alloc_traits.h:
 
@@ -790,6 +825,8 @@ CMakeFiles/turing.dir/turing-project/turing_machine.cpp.o: ../turing-project/tur
 /usr/include/c++/11/regex:
 
 /usr/include/c++/11/bits/invoke.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
 
 /usr/include/c++/11/bits/postypes.h:
 
@@ -850,6 +887,8 @@ CMakeFiles/turing.dir/turing-project/turing_machine.cpp.o: ../turing-project/tur
 /usr/include/c++/11/type_traits:
 
 /usr/include/x86_64-linux-gnu/sys/single_threaded.h:
+
+/usr/include/c++/11/cmath:
 
 /usr/include/c++/11/bits/allocator.h:
 
@@ -946,6 +985,8 @@ CMakeFiles/turing.dir/turing-project/turing_machine.cpp.o: ../turing-project/tur
 /usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 
 /usr/include/c++/11/bits/stl_iterator.h:
+
+/usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h:
 
@@ -1079,6 +1120,8 @@ CMakeFiles/turing.dir/turing-project/turing_machine.cpp.o: ../turing-project/tur
 
 ../turing-project/turing_machine.h:
 
+/usr/include/x86_64-linux-gnu/bits/fp-logb.h:
+
 ../turing-project/parser.h:
 
 /usr/include/c++/11/vector:
@@ -1165,6 +1208,8 @@ CMakeFiles/turing.dir/turing-project/turing_machine.cpp.o: ../turing-project/tur
 
 /usr/include/c++/11/bits/stl_map.h:
 
+/usr/include/math.h:
+
 ../turing-project/main.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
@@ -1182,5 +1227,3 @@ CMakeFiles/turing.dir/turing-project/turing_machine.cpp.o: ../turing-project/tur
 /usr/include/c++/11/ext/string_conversions.h:
 
 /usr/include/c++/11/bits/regex_automaton.tcc:
-
-/usr/include/c++/11/bits/regex_compiler.h:
