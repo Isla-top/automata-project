@@ -27,7 +27,7 @@ void Parser::read_file_and_parser(Turing& tm){
     }
 
     string line;
-    int linenum = 1;
+    int linenum = 0;
     int flag = 0;
     while(getline(file, line)){
         line = line.substr(0, line.find(";"));
@@ -81,13 +81,8 @@ vector<string> split(string line, char delimiter){
 }
 
 void Parser::process_Q(string line, int linenum, Turing& tm){
-    vector<string> tokens = split(line, ' ');
-    this->check(tokens.size() == 3, "status line format error", linenum);
-    this->check(tokens[1] == "=", "unknown symbol: " + tokens[1], linenum);
-    this->check(!tokens[2].empty(), "empty status", linenum);
-    this->check(tokens[2][0] == '{' && tokens[2][tokens[2].size() - 1] == '}', "lose '{' or '}'", linenum);
-
-    string ss = tokens[2].substr(1, tokens[2].size() - 2);
+    string body = this->pre_check(line, linenum, true);
+    string ss = body.substr(1, body.size() - 2);
     vector<string> status_vector = split(ss, ',');
     regex pattern("[^a-zA-Z0-9_]");
 
@@ -96,35 +91,111 @@ void Parser::process_Q(string line, int linenum, Turing& tm){
         this->check(!regex_search(s, pattern), "illegal status symbol", linenum);
     }
 
-    status.insert(status_vector.begin(), status_vector.end());
+    this->status.insert(status_vector.begin(), status_vector.end());
     
-    //todo: add status to tm
+    tm.set_status(this->status);
 }
 
 void Parser::process_S(string line, int linenum, Turing& tm){
+    string body = this->pre_check(line, linenum, true);
+    string is = body.substr(1, body.size() - 2);
+    vector<string> input_sym_vector = split(is, ',');
+    unordered_set<string> exclude = {" ", ";", "{", "}", "*", "_"};
+
+    for(string& s : input_sym_vector){
+        this->check(!s.empty(), "illegal input symbol", linenum); // illegal symbol ','
+        this->check(s.size() == 1, "length of symbol should be 1", linenum);
+        this->check(!exclude.count(s), "illegal input symbol", linenum);
+    }
+
+    for(string& s : input_sym_vector) this->input_syms.insert(s[0]);
+    for(const char c : this->input_syms) this->check(c >= 32 && c <= 126, "illegal input symbol", linenum);
     
+    tm.set_input_syms(this->input_syms);
 }
 
 void Parser::process_G(string line, int linenum, Turing& tm){
-    
+    string body = this->pre_check(line, linenum, true);
+    string ts = body.substr(1, body.size() - 2);
+    vector<string> tape_sym_vector = split(ts, ',');
+    unordered_set<string> exclude = {" ", ";", "{", "}", "*"};
+
+    for(string& s : tape_sym_vector){
+        this->check(!s.empty(), "illegal tape symbol", linenum); // illegal symbol ','
+        this->check(s.size() == 1, "length of symbol should be 1", linenum);
+        this->check(!exclude.count(s), "illegal tape symbol", linenum);
+    }
+
+    for(string& s : tape_sym_vector) this->tape_syms.insert(s[0]);
+    for(const char c : this->tape_syms) this->check(c >= 32 && c <= 126, "illegal tape symbol", linenum);
+    for(const char c : this->input_syms) this->check(this->tape_syms.count(c), "tape alphabet should contain input alphabet", linenum);
+
+    tm.set_tape_syms(this->tape_syms);
 }
 
 void Parser::process_q0(string line, int linenum, Turing& tm){
-    
+    string body = this->pre_check(line, linenum, false);
+    this->check(this->status.count(body), "illegal start status", linenum);
+
+    tm.set_q0_and_init_curr(body);
 }
 
 void Parser::process_B(string line, int linenum, Turing& tm){
-    
+    string body = this->pre_check(line, linenum, false);
+    this->check(body == "_", "illegal blank symbol", linenum);
+
+    tm.set_blank();
 }
 
 void Parser::process_F(string line, int linenum, Turing& tm){
-    
+    string body = this->pre_check(line, linenum, true);
+    string fs = body.substr(1, body.size() - 2);
+    vector<string> final_status_vector = split(fs, ',');
+
+    for(string& s : final_status_vector) this->check(this->status.count(s), "illegal final status", linenum);
+
+    unordered_set<string> final_s;
+    final_s.insert(final_status_vector.begin(), final_status_vector.end());
+    tm.set_final_status(final_s);
 }
 
 void Parser::process_N(string line, int linenum, Turing& tm){
+    string body = this->pre_check(line, linenum, false);
     
+    int n = 0;
+    for(char c : body){
+        this->check('0' <= c && c <= '9', "should be numbers", linenum);
+        n *= 10;
+        n += c - '0';
+    }
+    this->check(n != 0, "empty tapes", linenum);
+    this->tape_num = n;
+
+    tm.set_tape(this->tape_num);
 }
 
 void Parser::process_Delta(string line, int linenum, Turing& tm){
+    vector<string> delta = split(line, ' ');
+
+    this->check(delta.size() == 5, "illegal delta format", linenum);
+    this->check(this->status.count(delta[0]), "illegal old status: " + delta[0], linenum);
+    this->check(delta[1].size() == this->tape_num, "number of old symbols can't match tape number", linenum);
+    for(const char c : delta[1]) this->check(this->tape_syms.count(c) || c == '*', "illegal old symbol", linenum);
+    this->check(delta[2].size() == this->tape_num, "number of new symbols can't match tape number", linenum);
+    for(const char c : delta[2]) this->check(this->tape_syms.count(c) || c == '*', "illegal new symbol", linenum);
+    this->check(delta[3].size() == this->tape_num, "number of directions can't match tape number", linenum);
+    for(const char c : delta[3]) this->check(c == 'l' || c == 'r' || c == '*', "illegal direction", linenum);
+    this->check(this->status.count(delta[0]), "illegal new status: " + delta[4], linenum);
     
+    tm.add_transition(delta);
+}
+
+string Parser::pre_check(string line, int linenum, bool isSet){
+    vector<string> tokens = split(line, ' ');
+    this->check(tokens.size() == 3, "line format error", linenum);
+    this->check(tokens[1] == "=", "unknown symbols: " + tokens[1], linenum);
+    this->check(!tokens[2].empty(), "unexpected empty part", linenum);
+    if(isSet) this->check(tokens[2][0] == '{' && tokens[2][tokens[2].size() - 1] == '}', "lose '{' or '}'", linenum);
+
+    return tokens[2];
 }

@@ -14,6 +14,7 @@ private:
     unordered_set<string> status;
     unordered_set<char> input_syms;
     unordered_set<char> tape_syms;
+    int tape_num;
 
 public:
     Parser(string filename, bool verbose);
@@ -37,4 +38,7 @@ public:
     void process_N(string line, int linenum, Turing& tm);
 
     void process_Delta(string line, int linenum, Turing& tm);
+
+private:
+    string pre_check(string line, int linenum, bool isSet);
 };

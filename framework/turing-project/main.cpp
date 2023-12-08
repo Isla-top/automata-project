@@ -29,6 +29,8 @@ int main(int argc, char* argv[]){
     Parser parser = Parser(filename, verb);
     Turing tm = Turing(verb);
     parser.read_file_and_parser(tm);
+    tm.process(data);
+    tm.output_result();
 
     return 0;
 }
