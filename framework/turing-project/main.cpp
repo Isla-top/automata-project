@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
         cerr << "usage: turing [-v|--verbose] [-h|--help] <tm> <input>" << endl;
         return 0;
     }
-    if(filename.empty() || data.empty()){
+    if(filename.empty()){
         cerr << "illegal command format" << endl;
         exit(-2);
     }
